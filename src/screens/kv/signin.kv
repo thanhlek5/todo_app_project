@@ -1,0 +1,51 @@
+<SignInScreen>:
+    username_input: username
+    password_input: password
+    error_label: error_msg
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        spacing: 20
+
+        Label:
+            text: 'Đăng Nhập'
+            font_size: '32sp'
+            size_hint_y: None
+            height: self.texture_size[1] + 20
+
+        TextInput:
+            id: username
+            hint_text: 'Tên đăng nhập'
+            multiline: False
+            size_hint_y: None
+            height: '40dp'
+            
+        TextInput:
+            id: password
+            hint_text: 'Mật khẩu'
+            multiline: False
+            password: True
+            size_hint_y: None
+            height: '40dp'
+
+        Label:
+            id: error_msg
+            text: ''
+            color: (1, 0, 0, 1) # Màu đỏ
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        Button:
+            text: 'Đăng nhập'
+            size_hint_y: None
+            height: '40dp'
+            on_press: root.do_login()
+
+        Button:
+            text: 'Chưa có tài khoản? Đăng ký'
+            size_hint_y: None
+            height: '40dp'
+            background_color: (0, 0, 0, 0) # Nền trong suốt
+            color: (0.5, 0.7, 1, 1) # Màu xanh dương
+            on_press: app.root.current = 'signup'
