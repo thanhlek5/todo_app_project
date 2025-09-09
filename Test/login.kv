@@ -1,0 +1,43 @@
+Screen:
+
+
+    MDCard:
+        size_hint: None, None
+        size: '300dp','400dp'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        elevation: 2
+        padding: 25
+        spacing: 25
+        orientation: 'vertical'
+        theme_shadow_color: "Custom"
+        shadow_color: "cyan"
+        theme_bg_color: "Custom"
+        md_bg_color: "white"
+        md_bg_color_disabled: "grey"
+
+    MDLabel:
+        text: 'Welcome to My App'
+        halign: 'center'
+        valign: 'center'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+        theme_text_color: 'Custom'
+        font_style: "H6"
+    
+    MDFillRoundFlatButton:
+        text: 'Sign In'
+        size_hint: 0.31, 0.075
+        pos_hint: {'center_x': 0.5, 'center_y': 0.32}
+        theme_text_color: 'Custom'
+        md_bg_color: 0,1,1,1
+        text_color: 0, 0, 0, 1
+        line_color: 0,0,0,1
+        
+    MDFillRoundFlatButton:
+        text: 'Sign Up'
+        size_hint: 0.31, 0.075
+        pos_hint: {'center_x': 0.5, 'center_y': 0.24}
+        theme_text_color: 'Custom'
+        md_bg_color: 0,1,1,1
+        text_color: 0, 0, 0, 1
+        line_color: 0,0,0,1
+        
