@@ -23,4 +23,4 @@ def add_new_user(db_session: Session, username: str, password: str, email: str) 
     db_session.commit()
     db_session.refresh(new_user)
     
-    return True
+    return new_user

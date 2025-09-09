@@ -8,7 +8,7 @@ router = APIRouter()
 
 @router.post('/signup')
 def new_user_endpoint(request : CreateUser, db : Session = Depends(get_session)):
-    is_successful = add_new_user(       # -> bool
+    is_successful = add_new_user(       # -> User
         db_session= db,
         username= request.username,
         password= request.password,
