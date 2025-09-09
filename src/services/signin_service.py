@@ -1,5 +1,5 @@
 from sqlmodel import Session
-from models.model import User
+from src.models.model import User
 from werkzeug.security import check_password_hash
 
 

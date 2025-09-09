@@ -1,5 +1,5 @@
 from sqlmodel import Session
-from models.model import User
+from src.models.model import User
 def get_user_by_username(db_session:Session,username: str) -> bool:
     """
     hàm để kiểm tra là username đã tồn tại chưa.

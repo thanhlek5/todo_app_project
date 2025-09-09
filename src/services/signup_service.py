@@ -1,10 +1,10 @@
 from sqlmodel import Session
-from models.model import User
-from utils.validation import get_user_by_username
+from src.models.model import User
+from src.utils.validation import get_user_by_username
 from werkzeug.security import generate_password_hash 
 
 
-def add_new_user(db_session: Session, username: str, password: str, email: str) -> User:
+def add_new_user(db_session: Session, username: str, password: str, email: str) -> bool:
     """
     Thêm một người dùng vào cơ sở dữ liệu.
     Nhận vào 1 sesion đang hoạt động.
@@ -23,4 +23,4 @@ def add_new_user(db_session: Session, username: str, password: str, email: str) 
     db_session.commit()
     db_session.refresh(new_user)
     
-    return new_user
+    return True
