@@ -1,5 +1,5 @@
 from typing import Optional, List 
-from sqlmodel import SQLModel, Field, Relationship, create_engine
+from sqlmodel import SQLModel, Field, Relationship, create_engine,Session
 from datetime import date, datetime 
 from sqlalchemy import Column
 from sqlalchemy.sql.sqltypes import DateTime # Cần import DateTime từ sqlalchemy
@@ -31,6 +31,7 @@ class TaskColor(SQLModel,table = True):
 class TaskPriority(SQLModel,table = True):
     id: Optional[int] = Field(default=None, primary_key=True)
     priority : str = Field(default= 'Medium')
+    color_priority: str 
     
     subtasks: List['Subtask'] = Relationship(back_populates= 'priority')
     task : List['Task'] = Relationship(back_populates='priority')
@@ -159,3 +160,21 @@ class CalendarColor(SQLModel,table = True):
     
     calendar_color : List[Calendar] = Relationship(back_populates='color')
     
+
+
+# sqlite_file_name = 'database.db'
+# sqlite_url = f'sqlite:///D:/todo_app/Instance/{sqlite_file_name}'
+
+# engine = create_engine(sqlite_url, echo =True)
+# def create_db_and_tables():
+#     """
+#     Hàm thực thi việc tạo bảng.
+#     """
+#     print("Đang tạo các bảng...")
+#     # 3. Lệnh tạo bảng
+#     SQLModel.metadata.create_all(engine)
+#     print("Các bảng đã được tạo thành công!")
+
+# # Chạy hàm để tạo database và bảng
+# if __name__ == "__main__":
+#     create_db_and_tables()

@@ -44,7 +44,7 @@ def test_signup_successfully(client: TestClient):
     
     # Khi tạo mới thành công, status code phải là 201 Created
     assert response.status_code == 201
-    assert response.json()["message"] == "Đăng ký thành công."
+    assert response.json()["content"] == "Đăng ký thành công."
 
 def test_signup_existing_user(client: TestClient):
     """
@@ -64,31 +64,36 @@ def test_signup_existing_user(client: TestClient):
     assert response.status_code == 409
     assert "Tài khoản hoặc email đã tồn tại!" in response.json()["detail"]
 
-def test_signin_successful(client: TestClient, setup_test_user):
-    """
-    Kiểm tra trường hợp đăng nhập thành công.
-    Fixture 'setup_test_user' sẽ chạy trước, đảm bảo user đã tồn tại.
-    """
-    login_data = {
-        "username": setup_test_user["username"],
-        "password": setup_test_user["password"]
+def test_signin_successful(client: TestClient):
+    # Vì mỗi test là độc lập, ta cần tạo user ngay trong test này
+    user_data = {
+        "username": "testuser_signin",
+        "email": "testsignin@example.com",
+        "password": "correct_password"
     }
-    response = client.post('/auth/signin', json=login_data)
-    
-    # Khi đăng nhập thành công, status code phải là 200 OK
-    assert response.status_code == 200
-    assert response.json()["message"] == 'Đăng nhập thành công.'
+    # 1. Đăng ký user trước
+    signup_response = client.post("/auth/signup", json=user_data)
+    assert signup_response.status_code == 201
 
-def test_signin_unsuccessful_wrong_password(client: TestClient, setup_test_user):
-    """
-    Kiểm tra trường hợp đăng nhập thất bại do sai mật khẩu.
-    """
-    login_data = {
-        "username": setup_test_user["username"],
-        "password": "wrong_password" # Mật khẩu sai
+    # 2. Thử đăng nhập
+    login_data = {"username": "testuser_signin", "password": "correct_password"}
+    login_response = client.post('/auth/signin', json=login_data)
+
+    assert login_response.status_code == 200
+    assert login_response.json()["content"] == 'Đăng nhập thành công.'
+
+def test_signin_unsuccessful_wrong_password(client: TestClient):
+    # Tương tự, tạo user trước
+    user_data = {
+        "username": "testuser_signin",
+        "email": "testsignin@example.com",
+        "password": "correct_password"
     }
-    response = client.post('/auth/signin', json=login_data)
-    
-    # Khi xác thực thất bại, status code phải là 401 Unauthorized
-    assert response.status_code == 401
-    assert "Tên đăng nhập hoặc mật khẩu không chính xác" in response.json()["detail"]
+    client.post("/auth/signup", json=user_data)
+
+    # Thử đăng nhập với mật khẩu sai
+    login_data = {"username": "testuser_signin", "password": "wrong_password"}
+    login_response = client.post('/auth/signin', json=login_data)
+
+    assert login_response.status_code == 401
+    assert "Tên đăng nhập hoặc mật khẩu không chính xác" in login_response.json()["detail"]
